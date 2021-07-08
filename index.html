@@ -14,23 +14,125 @@
   
   <!-- NAVBAR -->
   <nav class="flex flex-row justify-between items-center py-3 px-10 bg-white">
-    <div class="font-bungee px-2 text-3xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500">Blazing Fast</div>
+    <div class="font-bungee px-2 text-3xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500 hover:cursor-pointer">Blazing Fast</div>
     
+    <div class="flex flex-row justify-start gap-2 items-center">
+      <div id="avatar" class="w-8 h-8 rounded-full bg-cover max-w-full bg-gray-300"></div>
+      <span>arijuanda@gmail.com</span>
+    </div>
+
     <div class="font-poppins">
-      <button id="signin-btn" class="bg-blue-400 font-bold text-gray-50 px-3 py-1 rounded-md">Sign In</button>
-      <button id="register-btn" class="bg-blue-400 font-bold text-gray-50 px-3 py-1 rounded-md">Register</button>
+      <button id="signin-btn" class="bg-blue-400 font-bold text-gray-50 px-3 py-1 rounded-md mr-2">Sign In</button>
+      <button id="register-btn" class="bg-blue-400 font-bold text-gray-50 px-3 py-1 rounded-md mr-2">Register</button>
+      <button id="logout-btn" class="bg-red-400 font-bold text-gray-50 px-3 py-1 rounded-md">Logout</button>
     </div>
   </nav>
 
 
+  <!-- CEK RESI -->
+  <div class="grid h-auto items-center justify-center font-poppins mt-32">
+    <div class="flex flex-col w-full justify-center gap-2 bg-white p-9 rounded-md shadow-lg">
+      <p class="text-center mb-8 font-bold text-xl text-gray-600 ">Cari Resi</p>
+      <form class="flex flex-row justify-between items-center gap-3">
+        <select class="border-2 border-gray-400 rounded-lg">
+          <option value="jne">JNE</option>
+          <option value="pos">Pos Indonesia</option>
+          <option value="tiki">TIKI</option>
+          <option value="jnt">JNT</option>
+          <option value="sicepat">SiCepat</option>
+          <option value="anteraja">Anteraja</option>
+        </select>
+        <input id="awb" type="text" placeholder="Nomor Resi" class="border-2 border-gray-400 rounded-lg" />
+        <svg id="cekresi-btn" xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-600 hover:text-blue-400 hover:cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </form>
+    </div>
+
+    <!-- KOMPONEN RESI -->
+    <div class="mt-5 bg-white rounded-lg p-6">
+      <div class="flex flex-col gap-2">
+        <div class="flex flex-row justify-evenly gap-2">
+          <div class="flex flex-col items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            <div class="w-[1px] h-full bg-green-400"></div> 
+          </div>
+          <div class="flex flex-col gap-2">
+            <span class="block text-gray-500">2020-10-02 13:33:00</span>
+            <span class="block">DELIVERED TO [RESALINA | 02-10-2020 13:33 | PRINGSEWU, PRINGSEWU ]</span>
+          </div>
+        </div>
+
+        <div class="flex flex-row justify-evenly gap-2">
+          <div class="flex flex-col items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+            <div class="w-[1px] h-full bg-green-400"></div> 
+          </div>
+          <div class="flex flex-col gap-2">
+            <span class="block text-gray-500">2020-10-02 13:33:00</span>
+            <span class="block">DELIVERED TO [RESALINA | 02-10-2020 13:33 | PRINGSEWU, PRINGSEWU ]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- CEK ONGKIR -->
-  <div>
+  <div class="grid h-auto items-center justify-center font-poppins mt-32">
+    
+    <div class="flex flex-col justify-center gap-2 bg-white p-9 rounded-md shadow-lg">
+      <p class="text-center mb-8 font-bold text-xl text-gray-600">Temukan Tarif Pengiriman Terbaik</p>
+      <form id="submit-cekongkir" class="flex flex-row justify-evenly gap-3 items-end">
+        <div class="flex flex-col gap-2">
+          <label>Asal</label>
+          <input class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label>Tujuan</label>
+          <input class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
+        </div>
+        <div class="flex flex-col gap-2">
+          <label>Berat (g)</label>
+          <input class="border-2 border-gray-400 rounded-lg" type="number" placeholder="1000"/>
+        </div>
+        <div>
+          <button class="px-4 py-[11px] bg-green-300 rounded-lg">Cari Tarif</button>
+        </div>
+      </form>
+    </div>
+
+
+    <!-- KOMPONEN CEK ONGKIR -->
+    <div class="mt-5 bg-white rounded-lg p-6">
+      <div class="flex flex-row justify-evenly gap-2">
+        <div class="flex flex-col">
+          <span class="block text-gray-600">Logistik</span>
+          <span class="block uppercase">jne</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="block text-gray-600">Jenis Layanan</span>
+          <span class="block">REG</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="block text-gray-600">Estimasi Waktu</span>
+          <span class="block">3 - 4 hari</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="block text-gray-600">Tarif</span>
+          <span class="block">15000</span>
+        </div>
+      </div>
+    </div>
 
   </div>
 
 
   <!-- LOGIN -->
-  <div class="grid h-auto items-center justify-center font-poppins mt-40">
+  <div class="grid h-auto items-center justify-center font-poppins mt-32">
     <form id="login-form" class="rounded-lg bg-white px-7 py-10 text-blue-900">
       <p class="font-bold mb-8 text-2xl text-blue-900">Log In to Blazing Fast</p>
 
@@ -50,10 +152,22 @@
         </svg>
       </div>
 
-      <button id="login-btn" class="uppercase bg-blue-900 text-white w-full rounded-md py-3 mt-5 hover:bg-blue-700 active:bg-blue-800">Sign In</button>
+      <button id="login-btn" class="uppercase bg-blue-900 text-white w-full rounded-md py-3 mt-8 hover:bg-blue-700 active:bg-blue-800">Sign In</button>
+
+      <div class="flex flex-row justify-between items-center my-5">
+        <div class="h-[1px] w-full bg-gray-400"></div>
+        <span class="px-2">or</span>
+        <div class="h-[1px] w-full bg-gray-400"></div>
+      </div>
+
+      <div id="github-login-btn" class="text-center uppercase bg-blue-900 text-white w-full rounded-md py-3 hover:bg-blue-700 active:bg-blue-800 cursor-pointer">
+        <span>Sign In With</span>
+        <img class="inline w-7 ml-2" src="./assets/github.png" alt="github" >
+      </div>
+
     </form>
   </div>
-  
+
 
   <!-- REGISTER -->
   <div class="grid h-auto items-center justify-center font-poppins mt-40">
@@ -76,7 +190,7 @@
         </svg>
       </div>
 
-      <button id="register-btn" class="uppercase bg-white text-blue-900 w-full rounded-md py-3 mt-5 hover:bg-gray-300 active:bg-gray-400">Sign In</button>
+      <button id="register-btn" class="uppercase bg-white text-blue-900 w-full rounded-md py-3 mt-8 hover:bg-gray-300 active:bg-gray-400">Register</button>
     </form>
   </div>
   
