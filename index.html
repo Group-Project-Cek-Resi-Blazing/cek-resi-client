@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="/build.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Poppins:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Yellowtail&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-200">
@@ -16,9 +17,9 @@
   <nav class="flex flex-row justify-between items-center py-3 px-10 bg-white">
     <div class="font-bungee px-2 text-3xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500 hover:cursor-pointer">Blazing Fast</div>
     
-    <div class="flex flex-row justify-start gap-2 items-center" id="profil-indo">
-      <div id="avatar" class="w-8 h-8 rounded-full bg-cover max-w-full bg-gray-300"></div>
-      <span id="email">arijuanda@gmail.com</span>
+    <div class="flex flex-row justify-start gap-2 items-center" id="profil-info">
+      <div id="avatar-header" class="w-8 h-8 rounded-full bg-cover max-w-full bg-gray-300"></div>
+      <span id="email-header"></span>
     </div>
 
     <div class="font-poppins">
@@ -80,7 +81,7 @@
       <form id="form-cek-ongkir" class="flex flex-row justify-evenly gap-3 items-end">
         <div class="flex flex-col gap-2">
           <label>Asal</label>
-          <input id="origin" class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
+          <input id="origin" class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten" name="123"/>
         </div>
         <div class="flex flex-col gap-2">
           <label>Tujuan</label>
@@ -98,8 +99,8 @@
 
 
     <!-- KOMPONEN CEK ONGKIR -->
-    <div class="mt-5 bg-white rounded-lg p-6">
-      <div id="list-ongkir" class="flex flex-row justify-evenly gap-2">
+    <div id="list-ongkir"  class="mt-5 bg-white rounded-lg p-6">
+      <div class="flex flex-row justify-evenly gap-2">
         <div class="flex flex-col">
           <span class="block text-gray-600">Logistik</span>
           <span class="block uppercase">jne</span>
@@ -118,7 +119,6 @@
         </div>
       </div>
     </div>
-
   </div>
 
 
@@ -186,6 +186,7 @@
   </div>
   
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script src="./src/main.js"></script>
 </body>
 </html>

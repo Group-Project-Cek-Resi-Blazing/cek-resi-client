@@ -1,4 +1,6 @@
 const baseURL = 'http://localhost:3000'
+let emailHeader
+let avaHeader
 function checkLogin(){
   if(!localStorage.access_token){
     $('#cekresi-btn').hide()
@@ -6,9 +8,9 @@ function checkLogin(){
     $('#logout-btn').hide()
     $('#cekresi-page').hide()
     $('#history-resi').hide()
-    $('#cekongkir-page').hide()
+    $('#cekongkir-page').hide() 
     $('#register-page').hide()
-    $('#profil-indo').hide()
+    $('#profil-info').hide()
 
     $('#signin-btn').show()
     $('#register-btn').show()
@@ -24,21 +26,11 @@ function checkLogin(){
     $('#login-page').hide()
     
     $('#cekresi-btn').show()
-    $('#profil-indo').show()
+    $('#profil-info').show()
     $('#cekongkir-btn').show()
     $('#logout-btn').show()
-    $('#cekongkir-page').show()
-
-    $.ajax({
-      url: `${baseURL}/user/profile`,
-      method:'get',
-    })
-    .done(data=>{
-      console.log(data);
-    })
-    .fail(err=>{
-      console.log(err);
-    })
+    profileInfo()
+    cekOngkirPage()
   }
 }
 //REGISTER-AREA
@@ -84,6 +76,9 @@ function submitLogin(event){
   .done(result=>{
     $('#login-email').val('')
     $('#login-password').val('')
+    emailHeader = result.email
+    avaHeader = result.link_avatar
+
     localStorage.setItem('access_token', result.access_token)
     checkLogin()
   })
@@ -91,17 +86,57 @@ function submitLogin(event){
     console.log(err);
   })
 }
+function githubLogin(){
+  $.ajax({
+    url: `${baseURL}/login/github`,
+    method:'GET'
+  })
+  .done(data=>{
+    console.log(data);
+    localStorage.access_token = data.access_token
+  })
+  .fail(err=>{
+    console.log(err);
+  })
+}
+
+function profileInfo(){
+  $('#email-header').empty()
+  $('#email-header').append(emailHeader)
+}
+
 //END-LOGIN-AREA
 
 function logout(){
   localStorage.removeItem('access_token')
+  $('#avatar-header').empty()
+  $('#email-header').empty()
   checkLogin()
-
-  //github logout
 }
 
 //CEK-ONGKIR-AREA
+function getCities(){
+  let result = []
+  $.ajax({
+    url: `${baseURL}/ongkir`,
+    method: 'GET',
+    headers: {
+      access_token: localStorage.access_token
+    }
+  })
+  .done(data =>{
+    data.forEach(res=>{
+      result.push({label : `${res.city_name}`, value: `${res.id}`})
+    })
+  })
+  .fail(err=>{
+    console.log(err);
+  })
+  return result
+}
+
 function cekOngkirPage(){
+  profileInfo()
   $('#cekongkir-page').show()
 
   $('#cekresi-page').hide()
@@ -110,9 +145,18 @@ function cekOngkirPage(){
   $('#weight').val('')
   $('#courier').val('')
   $('#list-ongkir').empty()
+  
+  const data = getCities()
+  $('#origin').autocomplete({
+    source: data
+  });
+  $('#destination').autocomplete({
+    source: data
+  });
 
   $('#form-cek-ongkir').submit(submitCekOngkir)
 }
+
 function submitCekOngkir(event){
   event.preventDefault()
   $('#list-ongkir').empty()
@@ -120,15 +164,44 @@ function submitCekOngkir(event){
   const origin = $('#origin').val()
   const destination = $('#destination').val()
   const weight = $('#weight').val()
-  const courier = $('#courier').val()
 
 
   $.ajax({
     url: `${baseURL}/ongkir`,
-    method: 'POST'
+    method: 'POST',
+    data: {
+      origin, destination, weight
+    },
+    headers: {
+      access_token: localStorage.access_token
+    }
   })
   .done(data =>{
-    console.log(data);
+    data.forEach(logistik=>{
+      logistik.costs.forEach(cost=>{
+        $('#list-ongkir').append(`
+        <div class="flex flex-row justify-evenly gap-2">
+            <div class="flex flex-col">
+              <span class="block text-gray-600">Logistik</span>
+              <span class="block uppercase">${logistik.code}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="block text-gray-600">Jenis Layanan</span>
+              <span class="block">${cost.service}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="block text-gray-600">Estimasi Waktu</span>
+              <span class="block">${cost.cost[0].etd}</span>
+            </div>
+            <div class="flex flex-col">
+              <span class="block text-gray-600">Tarif</span>
+              <span class="block">${cost.cost[0].value}</span>
+            </div>
+          </div>
+          <br>
+        `)
+      })
+    })
   })
   .fail(err=>{
     console.log(err);
@@ -138,14 +211,14 @@ function submitCekOngkir(event){
 
 //CEK-RESI-AREA
 function cekResiPage() {
+  profileInfo()
   $('#cekresi-page').show()
 
   $('#cekongkir-page').hide()
   $('#awb').val('')
   $('#history-resi').empty()
   
-  $('#form-cek-resi').submit(submitResi)
-  console.log(localStorage.access_token)
+  $('#form-cek-resi').submit(submitResi)  
 }
 
 function submitResi(event){
@@ -195,4 +268,5 @@ $(document).ready(function() {
   $('#logout-btn').click(logout)
   $('#cekresi-btn').click(cekResiPage)
   $('#cekongkir-btn').click(cekOngkirPage)
+  $('#github-login-btn').click(githubLogin)
 })
