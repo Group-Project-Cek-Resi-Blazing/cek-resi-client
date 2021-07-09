@@ -16,7 +16,7 @@
   <nav class="flex flex-row justify-between items-center py-3 px-10 bg-white">
     <div class="font-bungee px-2 text-3xl tracking-wider font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-green-500 hover:cursor-pointer">Blazing Fast</div>
     
-    <div class="flex flex-row justify-start gap-2 items-center">
+    <div class="flex flex-row justify-start gap-2 items-center" id="profil-indo">
       <div id="avatar" class="w-8 h-8 rounded-full bg-cover max-w-full bg-gray-300"></div>
       <span id="email">arijuanda@gmail.com</span>
     </div>
@@ -35,7 +35,7 @@
   <div id="cekresi-page" class="grid h-auto items-center justify-center font-poppins mt-32">
     <div class="flex flex-col w-full justify-center gap-2 bg-white p-9 rounded-md shadow-lg">
       <p class="text-center mb-8 font-bold text-xl text-gray-600 ">Cari Resi</p>
-      <form class="flex flex-row justify-between items-center gap-3">
+      <form class="flex flex-row justify-between items-center gap-3" id="form-cek-resi">
         <select id="courier-name" class="border-2 border-gray-400 rounded-lg">
           <option value="jne">JNE</option>
           <option value="pos">Pos Indonesia</option>
@@ -77,18 +77,18 @@
     
     <div class="flex flex-col justify-center gap-2 bg-white p-9 rounded-md shadow-lg">
       <p class="text-center mb-8 font-bold text-xl text-gray-600">Temukan Tarif Pengiriman Terbaik</p>
-      <form id="submit-cekongkir" class="flex flex-row justify-evenly gap-3 items-end">
+      <form id="form-cek-ongkir" class="flex flex-row justify-evenly gap-3 items-end">
         <div class="flex flex-col gap-2">
           <label>Asal</label>
-          <input class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
+          <input id="origin" class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
         </div>
         <div class="flex flex-col gap-2">
           <label>Tujuan</label>
-          <input class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
+          <input id="destination" class="border-2 border-gray-400 rounded-lg" type="text" placeholder="Kota/Kabupaten"/>
         </div>
         <div class="flex flex-col gap-2">
           <label>Berat (g)</label>
-          <input class="border-2 border-gray-400 rounded-lg" type="number" placeholder="1000"/>
+          <input id="weight" class="border-2 border-gray-400 rounded-lg" type="number" placeholder="1000"/>
         </div>
         <div>
           <button class="px-4 py-[11px] bg-green-300 rounded-lg">Cari Tarif</button>
@@ -99,7 +99,7 @@
 
     <!-- KOMPONEN CEK ONGKIR -->
     <div class="mt-5 bg-white rounded-lg p-6">
-      <div class="flex flex-row justify-evenly gap-2">
+      <div id="list-ongkir" class="flex flex-row justify-evenly gap-2">
         <div class="flex flex-col">
           <span class="block text-gray-600">Logistik</span>
           <span class="block uppercase">jne</span>

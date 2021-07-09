@@ -1,34 +1,168 @@
+const baseURL = 'http://localhost:3000'
+function checkLogin(){
+  if(!localStorage.access_token){
+    $('#cekresi-btn').hide()
+    $('#cekongkir-btn').hide()
+    $('#logout-btn').hide()
+    $('#cekresi-page').hide()
+    $('#history-resi').hide()
+    $('#cekongkir-page').hide()
+    $('#register-page').hide()
+    $('#profil-indo').hide()
+
+    $('#signin-btn').show()
+    $('#register-btn').show()
+    $('#login-page').show()
+
+    $('#login-form').submit(submitLogin)
+  }else{
+    $('#cekresi-page').hide()
+    $('#history-resi').hide()
+    $('#register-page').hide()
+    $('#signin-btn').hide()
+    $('#register-btn').hide()
+    $('#login-page').hide()
+    
+    $('#cekresi-btn').show()
+    $('#profil-indo').show()
+    $('#cekongkir-btn').show()
+    $('#logout-btn').show()
+    $('#cekongkir-page').show()
+
+    $.ajax({
+      url: `${baseURL}/user/profile`,
+      method:'get',
+    })
+    .done(data=>{
+      console.log(data);
+    })
+    .fail(err=>{
+      console.log(err);
+    })
+  }
+}
+//REGISTER-AREA
+function formRegister(){
+  $('#register-page').show()
+  $('#login-page').hide()
+
+  $('#register-form').submit(submitRegister)
+}
+
+function submitRegister(event){
+  event.preventDefault()
+
+  const email = $('#register-email').val()
+  const password = $('#register-password').val()
+  $.ajax({
+    url: `${baseURL}/user/register`,
+    method:'POST',
+    data: {
+      email, password
+    }
+  })
+  .done(_=>{
+    checkLogin()
+  })
+  .fail(err=>{
+    console.log(err);
+  })
+}
+//END-REGISTER-AREA
+//LOGIN-AREA
+function submitLogin(event){
+  event.preventDefault()
+  const email = $('#login-email').val()
+  const password = $('#login-password').val()
+  $.ajax({
+    url: `${baseURL}/user/login`,
+    method:'POST',
+    data: {
+      email, password
+    }
+  })
+  .done(result=>{
+    $('#login-email').val('')
+    $('#login-password').val('')
+    localStorage.setItem('access_token', result.access_token)
+    checkLogin()
+  })
+  .fail(err=>{
+    console.log(err);
+  })
+}
+//END-LOGIN-AREA
+
+function logout(){
+  localStorage.removeItem('access_token')
+  checkLogin()
+
+  //github logout
+}
+
+//CEK-ONGKIR-AREA
+function cekOngkirPage(){
+  $('#cekongkir-page').show()
+
+  $('#cekresi-page').hide()
+  $('#origin').val('')
+  $('#destination').val('')
+  $('#weight').val('')
+  $('#courier').val('')
+  $('#list-ongkir').empty()
+
+  $('#form-cek-ongkir').submit(submitCekOngkir)
+}
+function submitCekOngkir(event){
+  event.preventDefault()
+  $('#list-ongkir').empty()
+
+  const origin = $('#origin').val()
+  const destination = $('#destination').val()
+  const weight = $('#weight').val()
+  const courier = $('#courier').val()
+
+
+  $.ajax({
+    url: `${baseURL}/ongkir`,
+    method: 'POST'
+  })
+  .done(data =>{
+    console.log(data);
+  })
+  .fail(err=>{
+    console.log(err);
+  })
+}
+//END-CEK-ONGKIR
+
+//CEK-RESI-AREA
 function cekResiPage() {
   $('#cekresi-page').show()
-  $('#cekongkir-page').hide()
-  $('#login-page').hide()
-  $('#register-page').hide()
-  $('#signin-btn').hide()
-  $('#register-btn').hide()
 
+  $('#cekongkir-page').hide()
   $('#awb').val('')
   $('#history-resi').empty()
+  
+  $('#form-cek-resi').submit(submitResi)
+  console.log(localStorage.access_token)
 }
 
-function cekOngkir() {
-  $('#cekongkir-page').show()
-  $('#cekresi-page').hide()
-  $('#login-page').hide()
-  $('#register-page').hide()
-  $('#signin-btn').hide()
-  $('#register-btn').hide()
-}
+function submitResi(event){
+  event.preventDefault()
+  $('#history-resi').empty()
 
-function submitResi() {
   const courier = $('#courier-name').val()
   const awb = $('#awb').val()
 
   $.ajax({
-    url: `http://localhost:3000/resi?courier=${courier}&awb=${awb}`,
+    url: `${baseURL}/resi?courier=${courier}&awb=${awb}`,
     method: 'GET',
+    headers: {
+      access_token: localStorage.access_token
+  }
   })
     .done(data => {
-      // console.log(data.history)
       $('#history-resi').show()
 
       data.history.forEach(history => {
@@ -52,9 +186,13 @@ function submitResi() {
       console.log(err)
     })
 }
+//END-CEK-RESI
 
 $(document).ready(function() {
+  checkLogin()
+  $('#register-btn').click(formRegister)
+  $('#signin-btn').click(checkLogin)
+  $('#logout-btn').click(logout)
   $('#cekresi-btn').click(cekResiPage)
-  $('#cekongkir-btn').click(cekOngkir)
-  $('#awb-btn').click(submitResi)
+  $('#cekongkir-btn').click(cekOngkirPage)
 })
