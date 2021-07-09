@@ -29,6 +29,7 @@ function checkLogin(){
     $('#profil-info').show()
     $('#cekongkir-btn').show()
     $('#logout-btn').show()
+    $('#avatar-header').css("background-image", `url('${localStorage.avatar}')`)
     profileInfo()
     cekOngkirPage()
   }
@@ -80,6 +81,7 @@ function submitLogin(event){
     avaHeader = result.link_avatar
 
     localStorage.setItem('access_token', result.access_token)
+    localStorage.setItem('avatar', avaHeader)
     checkLogin()
   })
   .fail(err=>{
@@ -180,20 +182,20 @@ function submitCekOngkir(event){
     data.forEach(logistik=>{
       logistik.costs.forEach(cost=>{
         $('#list-ongkir').append(`
-        <div class="flex flex-row justify-evenly gap-2">
-            <div class="flex flex-col">
+        <div class="flex flex-row justify-center gap-2">
+            <div class="flex flex-col flex-1">
               <span class="block text-gray-600">Logistik</span>
               <span class="block uppercase">${logistik.code}</span>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col flex-1">
               <span class="block text-gray-600">Jenis Layanan</span>
               <span class="block">${cost.service}</span>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col flex-1">
               <span class="block text-gray-600">Estimasi Waktu</span>
               <span class="block">${cost.cost[0].etd}</span>
             </div>
-            <div class="flex flex-col">
+            <div class="flex flex-col flex-1">
               <span class="block text-gray-600">Tarif</span>
               <span class="block">${cost.cost[0].value}</span>
             </div>
@@ -233,9 +235,10 @@ function submitResi(event){
     method: 'GET',
     headers: {
       access_token: localStorage.access_token
-  }
+    }
   })
     .done(data => {
+      console.log(data)
       $('#history-resi').show()
 
       data.history.forEach(history => {
@@ -269,4 +272,5 @@ $(document).ready(function() {
   $('#cekresi-btn').click(cekResiPage)
   $('#cekongkir-btn').click(cekOngkirPage)
   $('#github-login-btn').click(githubLogin)
+  $('#awb-btn').click(submitResi)
 })
